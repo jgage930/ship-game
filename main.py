@@ -1,6 +1,8 @@
 import pygame
 from ship import Ship
 from bullet import Bullet
+from enemy import Enemy
+import random
 
 size = w,h = (1300, 1300)
 
@@ -13,12 +15,27 @@ black = (0, 0, 0)
 
 pygame.init()
 
+# method to place enemies
+def gen_enemies(num: int, screen):
+    enemy_group = pygame.sprite.Group()
+    for i in range(0, num):
+        x = random.randint(0, 1300)
+        y = random.randint(0, 1300)
+
+        enemy = Enemy(screen, (x, y))
+        enemy_group.add(enemy)
+
+    return enemy_group
+
 # bullet sprites
 bullet_group = pygame.sprite.Group()
 
 # player
 player = Ship((650, 650), screen, bullet_group)
 player_group = pygame.sprite.Group(player)
+
+# enemies
+enemy_group = gen_enemies(10, screen)
 
 # game loop
 running = True
@@ -34,6 +51,11 @@ while running:
     player.update()
     # update bullet sprites
     bullet_group.update()
+    # update enemy sprites
+    enemy_group.update()
+
+    # check for collisions
+    pygame.sprite.groupcollide(bullet_group, enemy_group, True, True)
 
     # update
     pygame.display.update()
