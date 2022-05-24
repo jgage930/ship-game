@@ -1,7 +1,7 @@
 import pygame
 from ship import Ship
 from bullet import Bullet
-from enemy import Enemy
+from enemies import ChaseEnemy
 import random
 
 size = w,h = (1300, 1300)
@@ -22,7 +22,7 @@ def gen_enemies(num: int, screen):
         x = random.randint(0, 1300)
         y = random.randint(0, 1300)
 
-        enemy = Enemy(screen, (x, y))
+        enemy = ChaseEnemy(screen, (x, y))
         enemy_group.add(enemy)
 
     return enemy_group
@@ -52,11 +52,11 @@ while running:
     # update bullet sprites
     bullet_group.update()
     # update enemy sprites
-    enemy_group.update()
+    enemy_group.update(player.get_pos())
 
     # check for collisions
     pygame.sprite.groupcollide(bullet_group, enemy_group, True, True)
-    
+
     # update
     pygame.display.update()
     clock.tick(30)

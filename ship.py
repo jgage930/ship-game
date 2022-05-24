@@ -93,6 +93,9 @@ class Ship(pygame.sprite.Sprite):
         bullet = Bullet(self.screen, start, target)
         self.bullet_group.add(bullet)
 
+    def get_pos(self):
+        return (self.x, self.y)
+
     def update(self):
         self.handle_keys()
         self.rotate()
