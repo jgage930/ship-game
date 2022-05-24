@@ -9,15 +9,15 @@ class Enemy(pygame.sprite.Sprite):
         self.screen = screen
 
         self.x, self.y = loc
+        
+        img = pygame.image.load('art/enemy1_sprite.png')
+        self.image = pygame.transform.scale(img, (100, 100))
 
-        self.rect = pygame.Rect(self.x, self.y, 50, 50)
+        self.rect = self.image.get_rect()
+        self.rect.center = loc
 
     def draw(self):
-        pygame.draw.rect(
-            self.screen,
-            color=(255, 0, 0),
-            rect=self.rect
-        )
+        self.screen.blit(self.image, self.rect)
 
     def update(self):
         self.draw()

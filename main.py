@@ -56,7 +56,7 @@ while running:
 
     # check for collisions
     pygame.sprite.groupcollide(bullet_group, enemy_group, True, True)
-
+    
     # update
     pygame.display.update()
     clock.tick(30)
