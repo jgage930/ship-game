@@ -35,6 +35,8 @@ class Ship(pygame.sprite.Sprite):
         # check if player is holding the mouse button
         self.is_holding = False
 
+        self.hp = 100
+
     def handle_keys(self):
         # handle all key presses in this method
         keys = pygame.key.get_pressed()
@@ -95,6 +97,12 @@ class Ship(pygame.sprite.Sprite):
 
     def get_pos(self):
         return (self.x, self.y)
+
+    def get_hurtbox(self):
+        return self.rect
+
+    def damage(self, amount: int):
+        self.hp -= amount
 
     def update(self):
         self.handle_keys()
