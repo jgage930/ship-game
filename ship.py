@@ -37,6 +37,9 @@ class Ship(pygame.sprite.Sprite):
 
         self.hp = 100
 
+        # score
+        self.score = 0
+
     def handle_keys(self):
         # handle all key presses in this method
         keys = pygame.key.get_pressed()

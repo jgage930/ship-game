@@ -12,7 +12,7 @@ class ChaseEnemy(pygame.sprite.Sprite):
         self.x, self.y = loc
         
         img = pygame.image.load('art/enemy1_sprite.png')
-        self.image = pygame.transform.scale(img, (100, 100))
+        self.image = pygame.transform.scale(img, (70, 70))
 
         self.rect = self.image.get_rect()
         self.rect.center = loc

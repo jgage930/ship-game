@@ -14,7 +14,7 @@ class Particle:
         self.x += self.xvel
         self.y += self.yvel
 
-        self.radius -= 0.1
+        self.radius -= 0.3
         pygame.draw.circle(
             win,
             self.color,
@@ -29,12 +29,12 @@ class Explosion:
         self.particles = []
         self.x, self.y = center
         self.colors = [
-            (255, 0, 0),
+            (255, 0, 0),d
             (255, 215, 0),
             (255, 69, 0)
         ]
 
-    def render(self):
+        # render a finite number of particles
         for _ in range(random.randint(20, 50)):
             # pick a random angle
             theta = random.uniform(-1 * math.pi, math.pi)
