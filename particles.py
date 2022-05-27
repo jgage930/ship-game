@@ -29,7 +29,7 @@ class Explosion:
         self.particles = []
         self.x, self.y = center
         self.colors = [
-            (255, 0, 0),d
+            (255, 0, 0),
             (255, 215, 0),
             (255, 69, 0)
         ]
@@ -39,10 +39,13 @@ class Explosion:
             # pick a random angle
             theta = random.uniform(-1 * math.pi, math.pi)
 
+            # pick a random speed
+            speed = random.randint(5, 10)
+
             particle = Particle(
                 self.x,
                 self.y,
-                self.speed * math.cos(theta),
+                speed * math.cos(theta),
                 self.speed * math.sin(theta),
                 random.randint(2, 10),
                 random.choice(self.colors)
