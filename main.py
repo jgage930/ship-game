@@ -85,6 +85,7 @@ while running:
         explosion.drawParticles(screen)
     
     print(player.score)
+    
     # update
     pygame.display.update()
     clock.tick(30)
