@@ -14,7 +14,7 @@ class Particle:
         self.x += self.xvel
         self.y += self.yvel
 
-        self.radius -= 0.3
+        self.radius -= 0.5
         pygame.draw.circle(
             win,
             self.color,
@@ -25,7 +25,6 @@ class Particle:
 class Explosion:
 
     def __init__(self, center:tuple) -> None:
-        self.speed = 5
         self.particles = []
         self.x, self.y = center
         self.colors = [
@@ -40,14 +39,14 @@ class Explosion:
             theta = random.uniform(-1 * math.pi, math.pi)
 
             # pick a random speed
-            speed = random.randint(5, 10)
+            speed = random.randint(5, 20)
 
             particle = Particle(
                 self.x,
                 self.y,
                 speed * math.cos(theta),
-                self.speed * math.sin(theta),
-                random.randint(2, 10),
+                speed * math.sin(theta),
+                random.randint(2, 15),
                 random.choice(self.colors)
             )
             self.particles.append(particle)
