@@ -10,12 +10,19 @@ size = w,h = (1300, 1300)
 
 screen = pygame.display.set_mode(size)
 clock = pygame.time.Clock()
+pygame.init()
 
 # colors
 white = (255, 255, 255)
 black = (0, 0, 0)
 
-pygame.init()
+# method for writing text
+font = pygame.font.SysFont(None, 20)
+def draw_text(text, font, color, surface, x, y):
+    textobj = font.render(text, 1, color)
+    textrect = textobj.get_rect()
+    textrect.topleft = (x, y)
+    surface.blit(textobj, textrect)
 
 # method to place enemies
 def gen_enemies(num: int, screen):
@@ -29,63 +36,65 @@ def gen_enemies(num: int, screen):
 
     return enemy_group
 
-# bullet sprites
-bullet_group = pygame.sprite.Group()
+# main game loop 
+def game():
+    # bullet sprites
+    bullet_group = pygame.sprite.Group()
 
-# player
-player = Ship((650, 650), screen, bullet_group)
-player_group = pygame.sprite.Group(player)
+    # player
+    player = Ship((650, 650), screen, bullet_group)
+    player_group = pygame.sprite.Group(player)
 
-# enemies
-enemy_group = gen_enemies(10, screen)
+    # enemies
+    enemy_group = gen_enemies(10, screen)
 
-# explosion particles
-explosions = []
+    # explosion particles
+    explosions = []
 
-# hud 
-hud = Hud(player, screen)
+    # hud 
+    hud = Hud(player, screen)
 
-# game loop
-running = True
-while running:
-    screen.fill(black)
+    # game loop
+    running = True
+    while running:
+        screen.fill(black)
 
-    # quit
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            pygame.quit()
+        # quit
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
 
-    # update player sprite
-    player.update()
-    # update bullet sprites
-    bullet_group.update()
-    # update enemy sprites
-    enemy_group.update(player.get_pos())
-    # update hud
-    hud.update()
+        # update player sprite
+        player.update()
+        # update bullet sprites
+        bullet_group.update()
+        # update enemy sprites
+        enemy_group.update(player.get_pos())
+        # update hud
+        hud.update()
 
-    # check for collisions between bullet and ememies
-    hits = pygame.sprite.groupcollide(bullet_group, enemy_group, True, True)
-    # iterate through each enmy the bullet hits
-    
-    for bullet in hits:
-        # get the enemy the bullet hits
-        enemy = hits[bullet]
-        explosions.append(Explosion((enemy[0].x, enemy[0].y)))
-        player.score += len(hits[bullet])
+        # check for collisions between bullet and ememies
+        hits = pygame.sprite.groupcollide(bullet_group, enemy_group, True, True)
+        # iterate through each enmy the bullet hits
+        
+        for bullet in hits:
+            # get the enemy the bullet hits
+            enemy = hits[bullet]
+            explosions.append(Explosion((enemy[0].x, enemy[0].y)))
+            player.score += len(hits[bullet])
 
 
-    # check for collisions between player and enemies
-    hits = pygame.sprite.groupcollide(player_group, enemy_group, False, False)
-    if hits:
-        player.damage(3)
-    
-    # draw all explosions
-    for explosion in explosions:
-        explosion.drawParticles(screen)
-    
-    print(player.score)
-    
-    # update
-    pygame.display.update()
-    clock.tick(30)
+        # check for collisions between player and enemies
+        hits = pygame.sprite.groupcollide(player_group, enemy_group, False, False)
+        if hits:
+            player.damage(3)
+        
+        # draw all explosions
+        for explosion in explosions:
+            explosion.drawParticles(screen)
+        
+        print(player.score)
+
+        # update
+        pygame.display.update()
+        clock.tick(30)
