@@ -36,7 +36,38 @@ def gen_enemies(num: int, screen):
 
     return enemy_group
 
-# main game loop 
+# main menu loop
+click = False
+def main_menu():
+    while True:
+        screen.fill(black)
+        draw_text('main menu', font, black, screen, 20, 20)
+
+        mouse_pos = pygame.mouse.get_pos()
+
+        button_1 = pygame.Rect(50, 100, 200, 50)
+        if button_1.collidepoint(mouse_pos):
+            if click:
+                game()
+
+        pygame.draw.rect(screen, (255, 0, 0), button_1)
+
+        click = False
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.exit()
+
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    pygame.quit()
+
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if event.button == 1:
+                    click = True
+        pygame.display.update()
+        clock.tick(30)
+
+# game loop 
 def game():
     # bullet sprites
     bullet_group = pygame.sprite.Group()
@@ -98,3 +129,5 @@ def game():
         # update
         pygame.display.update()
         clock.tick(30)
+
+main_menu()
